@@ -1,7 +1,77 @@
 {
-  "name": "",
-  "info": "",
-  "model_type": "",
-  "parameters": {},
-  "output": {}
+  "name": "Fresno Metro Real Estate Price Predictor",
+  "info": "Predicts residential real estate prices in the Fresno metropolitan area using property features like bedrooms, bathrooms, square footage, and other characteristics.",
+  "model_type": "regression",
+  "parameters": {
+    "bedrooms": {
+      "name": "Bedrooms",
+      "tooltip": "Number of bedrooms in the property",
+      "display_type": "slider",
+      "default_value": 3,
+      "min_value": 1,
+      "max_value": 6,
+      "step_value": 1,
+      "required": true
+    },
+    "bathrooms": {
+      "name": "Bathrooms",
+      "tooltip": "Number of bathrooms in the property",
+      "display_type": "slider",
+      "default_value": 2,
+      "min_value": 1,
+      "max_value": 5,
+      "step_value": 0.5,
+      "required": true
+    },
+    "sqft": {
+      "name": "Square Footage",
+      "tooltip": "Total living area square footage of the property",
+      "display_type": "number",
+      "default_value": 1500,
+      "min_value": 500,
+      "max_value": 5000,
+      "unit": "sq ft",
+      "required": true
+    },
+    "year_built": {
+      "name": "Year Built",
+      "tooltip": "Year the property was constructed",
+      "display_type": "number",
+      "default_value": 2000,
+      "min_value": 1950,
+      "max_value": 2024,
+      "required": true
+    },
+    "lot_size": {
+      "name": "Lot Size",
+      "tooltip": "Size of the property lot in square feet",
+      "display_type": "number",
+      "default_value": 7000,
+      "min_value": 2000,
+      "max_value": 20000,
+      "unit": "sq ft",
+      "required": true
+    },
+    "garage_spaces": {
+      "name": "Garage Spaces",
+      "tooltip": "Number of garage parking spaces",
+      "display_type": "slider",
+      "default_value": 2,
+      "min_value": 0,
+      "max_value": 4,
+      "step_value": 1,
+      "required": true
+    }
+  },
+  "output": {
+    "predicted_price": {
+      "name": "Predicted Price",
+      "type": "number",
+      "unit": "USD"
+    },
+    "currency": {
+      "name": "Currency",
+      "type": "string"
+    }
+  }
 }

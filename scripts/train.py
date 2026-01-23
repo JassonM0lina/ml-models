@@ -11,12 +11,13 @@ import shutil
 import boto3
 from datetime import datetime
 import pandas as pd
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from math import sqrt
+import numpy as np
 
 # TODO: Add your model-specific imports here
-# Example: from sklearn.linear_model import LinearRegression
-# Example: from statsmodels.tsa.arima.model import ARIMA
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import StandardScaler
 
 
 def upload_evaluation_to_s3(evaluation_data: dict, eval_s3_path: str) -> str:
@@ -67,7 +68,8 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     # TODO: Add your model hyperparameters here
-    # Example: parser.add_argument("--learning-rate", type=float, default=0.01)
+    parser.add_argument("--fit-intercept", type=bool, default=True, help="Whether to calculate the intercept")
+    parser.add_argument("--normalize", type=bool, default=True, help="Whether to normalize features")
 
     # Data split ratios
     parser.add_argument("--train-split", type=float, default=0.7)
@@ -107,7 +109,29 @@ def load_and_preprocess_data(input_path, train_split, validation_split, test_spl
     df = pd.read_csv(data_file)
 
     # TODO: Add your data preprocessing logic here
-    # Example: Parse dates, handle missing values, feature engineering
+    print(f"  Original columns: {list(df.columns)}")
+    print(f"  Data types: {df.dtypes.to_dict()}")
+    
+    # Parse date column if it exists
+    if 'date' in df.columns:
+        df['date'] = pd.to_datetime(df['date'])
+        # Extract date features
+        df['year'] = df['date'].dt.year
+        df['month'] = df['date'].dt.month
+        df['quarter'] = df['date'].dt.quarter
+        # Drop original date column for modeling
+        df = df.drop('date', axis=1)
+        print(f"  Added date features: year, month, quarter")
+    
+    # Handle categorical variables if any
+    categorical_columns = df.select_dtypes(include=['object']).columns
+    if len(categorical_columns) > 0:
+        print(f"  Found categorical columns: {list(categorical_columns)}")
+        # For simplicity, drop categorical columns (could use encoding in practice)
+        df = df.select_dtypes(exclude=['object'])
+        print(f"  Dropped categorical columns for simplicity")
+    
+    print(f"  Final columns for modeling: {list(df.columns)}")
 
     print(f"  Loaded {len(df)} rows")
 
@@ -117,6 +141,8 @@ def load_and_preprocess_data(input_path, train_split, validation_split, test_spl
     if missing_values > 0:
         print(f"  Found {missing_values} missing values")
         # TODO: Handle missing values (fill, drop, etc.)
+        df = df.fillna(df.median())
+        print(f"  Filled missing values with median")
 
     # Validate minimum rows for splitting
     n = len(df)
@@ -169,31 +195,66 @@ def train_model(train_data, val_data, args):
     print("=" * 60)
 
     # TODO: Implement your model training logic here
-    # Example:
-    # X_train = train_data.drop('target', axis=1)
-    # y_train = train_data['target']
-    # model = YourModel()
-    # model.fit(X_train, y_train)
-
-    model = None  # TODO: Replace with your trained model
+    # Assume 'price' is the target column, rest are features
+    feature_cols = [col for col in train_data.columns if col != 'price']
+    target_col = 'price'
+    
+    print(f"  Feature columns: {feature_cols}")
+    print(f"  Target column: {target_col}")
+    
+    # Prepare training data
+    X_train = train_data[feature_cols]
+    y_train = train_data[target_col]
+    
+    X_val = val_data[feature_cols]
+    y_val = val_data[target_col]
+    
+    print(f"  Training set: {X_train.shape[0]} samples, {X_train.shape[1]} features")
+    print(f"  Validation set: {X_val.shape[0]} samples")
+    
+    # Feature scaling
+    scaler = StandardScaler() if args.normalize else None
+    if scaler:
+        X_train_scaled = scaler.fit_transform(X_train)
+        X_val_scaled = scaler.transform(X_val)
+        print(f"  Applied feature scaling")
+    else:
+        X_train_scaled = X_train.values
+        X_val_scaled = X_val.values
+    
+    # Train linear regression model
+    model = LinearRegression(fit_intercept=args.fit_intercept)
+    model.fit(X_train_scaled, y_train)
+    
+    # Store scaler with model for inference
+    model_dict = {
+        'model': model,
+        'scaler': scaler,
+        'feature_columns': feature_cols
+    }
 
     print("  Model trained successfully")
+    print(f"  Intercept: {model.intercept_:.2f}")
+    print(f"  Coefficients shape: {model.coef_.shape}")
 
     # Validate on validation set
     print(f"\nValidating on {len(val_data)} samples...")
     # TODO: Calculate validation metrics
-    val_rmse = 0.0  # TODO: Replace with actual validation RMSE
+    val_predictions = model.predict(X_val_scaled)
+    val_rmse = sqrt(mean_squared_error(y_val, val_predictions))
+    val_r2 = r2_score(y_val, val_predictions)
 
     print(f"  Validation RMSE: {val_rmse:.2f}")
+    print(f"  Validation R²: {val_r2:.4f}")
 
-    return model, val_rmse
+    return model_dict, val_rmse
 
 
 # =============================================================================
 # STEP 3: MODEL EVALUATION
 # =============================================================================
 
-def evaluate_model(model, test_data):
+def evaluate_model(model_dict, test_data):
     """Evaluate model on test set"""
     print("\n" + "=" * 60)
     print("STEP 3: MODEL EVALUATION")
@@ -202,21 +263,32 @@ def evaluate_model(model, test_data):
     print(f"\nEvaluating on {len(test_data)} test samples...")
 
     # TODO: Implement your evaluation logic here
-    # Example:
-    # X_test = test_data.drop('target', axis=1)
-    # y_test = test_data['target']
-    # predictions = model.predict(X_test)
-
-    predictions = []  # TODO: Replace with actual predictions
-    actuals = []      # TODO: Replace with actual values
-    errors = []       # TODO: Replace with actual errors
+    model = model_dict['model']
+    scaler = model_dict['scaler']
+    feature_cols = model_dict['feature_columns']
+    
+    # Prepare test data
+    X_test = test_data[feature_cols]
+    y_test = test_data['price']
+    
+    # Apply scaling if used during training
+    if scaler:
+        X_test_scaled = scaler.transform(X_test)
+    else:
+        X_test_scaled = X_test.values
+    
+    # Generate predictions
+    predictions = model.predict(X_test_scaled)
+    actuals = y_test.values
+    errors = predictions - actuals
 
     # Calculate metrics
     # TODO: Replace with actual metric calculations
-    rmse = 0.0
-    mae = 0.0
-    mape = 0.0
-    r2 = 0.0
+    rmse = sqrt(mean_squared_error(actuals, predictions))
+    mae = mean_absolute_error(actuals, predictions)
+    # MAPE calculation (avoid division by zero)
+    mape = np.mean(np.abs((actuals - predictions) / np.maximum(np.abs(actuals), 1e-8))) * 100
+    r2 = r2_score(actuals, predictions)
 
     print(f"\nTest Set Metrics:")
     print(f"  RMSE: {rmse:.2f}")
@@ -226,14 +298,14 @@ def evaluate_model(model, test_data):
 
     return {
         "metrics": {
-            "rmse": rmse,
-            "mae": mae,
-            "mape": mape,
-            "r2": r2
+            "rmse": float(rmse),
+            "mae": float(mae),
+            "mape": float(mape),
+            "r2": float(r2)
         },
-        "predictions": predictions,
-        "actuals": actuals,
-        "errors": errors
+        "predictions": predictions.tolist(),
+        "actuals": actuals.tolist(),
+        "errors": errors.tolist()
     }
 
 
@@ -274,7 +346,7 @@ def save_outputs(model, args, data_quality_report, evaluation_results):
 
     # Save metadata
     metadata = {
-        "model_type": "TODO",  # TODO: Replace with your model type
+        "model_type": "Linear Regression",
         "data_quality": data_quality_report,
         "test_metrics": evaluation_results["metrics"]
     }
