@@ -1,7 +1,107 @@
 {
-  "name": "",
-  "info": "",
-  "model_type": "",
-  "parameters": {},
-  "output": {}
+  "name": "Medell\u00edn Metro Price Predictor",
+  "info": "Predicts metro fare prices in Medell\u00edn based on distance, number of stations, time of day, and other factors using linear regression",
+  "model_type": "regression",
+  "parameters": {
+    "distance_km": {
+      "name": "Distance (km)",
+      "tooltip": "Total distance of the metro journey in kilometers",
+      "display_type": "slider",
+      "default_value": 5.0,
+      "unit": "km",
+      "min_value": 0.5,
+      "max_value": 30.0,
+      "step_value": 0.5,
+      "required": true
+    },
+    "stations": {
+      "name": "Number of Stations",
+      "tooltip": "Number of stations the metro will pass through during the journey",
+      "display_type": "slider",
+      "default_value": 5,
+      "unit": "stations",
+      "min_value": 1,
+      "max_value": 20,
+      "step_value": 1,
+      "required": true
+    },
+    "peak_hours": {
+      "name": "Peak Hours",
+      "tooltip": "Whether the journey is during peak hours (1) or off-peak (0)",
+      "display_type": "selectbox",
+      "default_value": 0,
+      "options": [
+        0,
+        1
+      ],
+      "required": true
+    },
+    "day_of_week": {
+      "name": "Day of Week",
+      "tooltip": "Day of the week (1=Monday, 7=Sunday)",
+      "display_type": "selectbox",
+      "default_value": 1,
+      "options": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "required": true
+    },
+    "month": {
+      "name": "Month",
+      "tooltip": "Month of the year (1=January, 12=December)",
+      "display_type": "selectbox",
+      "default_value": 1,
+      "options": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "required": true
+    },
+    "year": {
+      "name": "Year",
+      "tooltip": "Year of travel",
+      "display_type": "number",
+      "default_value": 2024,
+      "min_value": 2020,
+      "max_value": 2030,
+      "required": false
+    },
+    "day": {
+      "name": "Day of Month",
+      "tooltip": "Day of the month (1-31)",
+      "display_type": "slider",
+      "default_value": 15,
+      "min_value": 1,
+      "max_value": 31,
+      "step_value": 1,
+      "required": false
+    }
+  },
+  "output": {
+    "predicted_price": {
+      "name": "Predicted Metro Price",
+      "type": "number",
+      "unit": "COP"
+    },
+    "currency": {
+      "name": "Currency",
+      "type": "string"
+    }
+  }
 }
