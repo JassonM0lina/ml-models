@@ -1,6 +1,5 @@
 """
-Inference Script for ARIMA Model on SageMaker Serverless Endpoint
-Dependencies installed via requirements.txt in code/ directory
+Inference Script Template for SageMaker Serverless Endpoint
 """
 
 import os
@@ -9,13 +8,11 @@ import pickle
 
 
 def model_fn(model_dir):
-    """Load the ARIMA model from the model directory"""
-    # Import statsmodels here to ensure requirements.txt has been installed
-    # This is needed for unpickling the ARIMA model
-    import statsmodels.tsa.arima.model
-    print(f"statsmodels imported successfully")
+    """Load the model from the model directory"""
+    # TODO: Add your model-specific imports here if needed
+    # Example: import statsmodels.tsa.arima.model
 
-    model_path = os.path.join(model_dir, "arima_model.pkl")
+    model_path = os.path.join(model_dir, "model.pkl")
     print(f"Loading model from: {model_path}")
 
     with open(model_path, "rb") as f:
@@ -26,32 +23,32 @@ def model_fn(model_dir):
 
 
 def input_fn(request_body, request_content_type):
-    """Parse input data"""
-    print(f"Content type: {request_content_type}")
-    print(f"Request body: {request_body}")
+    """
+    Parse input data matching inference_schema.json parameters.
 
-    if request_content_type == "application/json":
-        data = json.loads(request_body)
-        # Expect {"steps": N} where N is number of forecast steps
-        steps = data.get("steps", 1)
-        return {"steps": steps}
-    else:
+    Request format: {"param1": value1, "param2": value2}
+    Returns: {"param1": value1, "param2": value2}
+    """
+    if request_content_type != "application/json":
         raise ValueError(f"Unsupported content type: {request_content_type}")
+
+    features = json.loads(request_body)
+
+    # Ensure dict format {param_name: value}
+    if not isinstance(features, dict):
+        raise ValueError(f"Expected dict with parameter names, got {type(features).__name__}")
+
+    print(f"Parsed parameters: {features}")
+    return features
 
 
 def predict_fn(input_data, model):
-    """Generate forecast predictions"""
-    steps = input_data.get("steps", 1)
-    print(f"Forecasting {steps} steps ahead")
+    """Generate predictions"""
+    print(f"Input data: {input_data}")
 
-    # Generate forecast
-    forecast = model.forecast(steps=steps)
+    # TODO: Implement your prediction logic
 
-    # Convert to list for JSON serialization
-    if hasattr(forecast, 'tolist'):
-        predictions = forecast.tolist()
-    else:
-        predictions = list(forecast)
+    predictions = None
 
     print(f"Predictions: {predictions}")
     return predictions
@@ -60,9 +57,10 @@ def predict_fn(input_data, model):
 def output_fn(predictions, response_content_type):
     """Format output response"""
     if response_content_type == "application/json":
+        #TODO: Modify the output format of the predictions as needed
+        
         return json.dumps({
-            "predictions": predictions,
-            "steps": len(predictions)
+            predictions
         })
     else:
         raise ValueError(f"Unsupported response type: {response_content_type}")
