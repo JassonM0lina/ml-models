@@ -112,16 +112,10 @@ def load_and_preprocess_data(input_path, train_split, validation_split, test_spl
     print(f"  Original columns: {list(df.columns)}")
     print(f"  Data types: {df.dtypes.to_dict()}")
     
-    # Parse date column if it exists
+    # Drop date column if it exists (not needed for property feature prediction)
     if 'date' in df.columns:
-        df['date'] = pd.to_datetime(df['date'])
-        # Extract date features
-        df['year'] = df['date'].dt.year
-        df['month'] = df['date'].dt.month
-        df['quarter'] = df['date'].dt.quarter
-        # Drop original date column for modeling
         df = df.drop('date', axis=1)
-        print(f"  Added date features: year, month, quarter")
+        print(f"  Dropped date column - not needed for property prediction")
     
     # Handle categorical variables if any
     categorical_columns = df.select_dtypes(include=['object']).columns
@@ -130,6 +124,21 @@ def load_and_preprocess_data(input_path, train_split, validation_split, test_spl
         # For simplicity, drop categorical columns (could use encoding in practice)
         df = df.select_dtypes(exclude=['object'])
         print(f"  Dropped categorical columns for simplicity")
+    
+    # Ensure we have the expected columns that match inference schema
+    expected_feature_cols = ['bedrooms', 'bathrooms', 'sqft', 'year_built', 'lot_size', 'garage_spaces']
+    expected_target_col = 'price'
+    
+    missing_cols = []
+    for col in expected_feature_cols + [expected_target_col]:
+        if col not in df.columns:
+            missing_cols.append(col)
+    
+    if missing_cols:
+        raise ValueError(f"Missing expected columns: {missing_cols}. Available: {list(df.columns)}")
+    
+    # Keep only the expected columns to match inference schema exactly
+    df = df[expected_feature_cols + [expected_target_col]]
     
     print(f"  Final columns for modeling: {list(df.columns)}")
 
@@ -195,8 +204,8 @@ def train_model(train_data, val_data, args):
     print("=" * 60)
 
     # TODO: Implement your model training logic here
-    # Assume 'price' is the target column, rest are features
-    feature_cols = [col for col in train_data.columns if col != 'price']
+    # Use property features that match inference schema exactly
+    feature_cols = ['bedrooms', 'bathrooms', 'sqft', 'year_built', 'lot_size', 'garage_spaces']
     target_col = 'price'
     
     print(f"  Feature columns: {feature_cols}")

@@ -33,7 +33,7 @@ def input_fn(request_body, request_content_type):
     if request_content_type == "application/json":
         data = json.loads(request_body)
         # TODO: Parse your expected input format
-        # Expected format: {"features": {"bedrooms": 3, "bathrooms": 2, "sqft": 1500, "year": 2020, ...}}
+        # Expected format: {"features": {"bedrooms": 3, "bathrooms": 2, "sqft": 1500, "year_built": 2020, ...}}
         if "features" in data:
             return data["features"]
         else:
@@ -52,9 +52,11 @@ def predict_fn(input_data, model_dict):
     scaler = model_dict['scaler']
     feature_columns = model_dict['feature_columns']
     
-    # Extract features in the correct order
+    # Extract features in the correct order - matches inference schema exactly
+    expected_features = ['bedrooms', 'bathrooms', 'sqft', 'year_built', 'lot_size', 'garage_spaces']
+    
     features = []
-    for col in feature_columns:
+    for col in expected_features:
         if col in input_data:
             features.append(input_data[col])
         else:
