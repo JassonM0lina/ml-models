@@ -273,7 +273,19 @@ if __name__ == "__main__":
     model = train_model(train_data, metadata, args)
 
     # Step 3: Model Evaluation
-    evaluation = evaluate_model(model, test_data)
+    #TODO: Modify the function calls as needed.
+
+    # Step 1: Data Preprocessing
+    train_data, validation_data, test_data, metadata = load_and_preprocess_data(args)
+
+    # Step 2: Model Training
+    model = train_model(train_data, metadata, args)
+
+    # Step 3: Model Evaluation
+    evaluation = evaluate_model(model, validation_data, test_data)
 
     # Save outputs
-    save_outputs(model, args, evaluation)
+    evaluation_report = save_outputs(model, args, evaluation)
+
+    # Print final summary
+    print("\n" + "=" * 60)
