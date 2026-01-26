@@ -1,0 +1,480 @@
+2025-08-28 12:31:25: ============================================================
+2025-08-28 12:31:25: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-08-28 12:31:31: Forecast completed successfully
+2025-08-29 10:30:03: ============================================================
+2025-08-29 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-08-29 10:30:12: Forecast completed successfully
+2025-09-02 10:30:04: ============================================================
+2025-09-02 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-02 10:30:17: Forecast completed successfully
+2025-09-03 10:30:06: ============================================================
+2025-09-03 10:30:06: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 10:30:15: ERROR: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+Traceback (most recent call last):
+  File "C:\Users\i31851\OneDrive - Wood Mackenzie Limited\Documents\Automation Work For Others\Jim Mitchell\Saudi Direct Burn V2\saudi_burn_forecast.py", line 718, in <module>
+    with pd.ExcelWriter(log_file, engine='openpyxl') as writer:
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+
+2025-09-03 12:36:27: ============================================================
+2025-09-03 12:36:27: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 12:36:33: ERROR: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+Traceback (most recent call last):
+  File "c:\Users\i31851\OneDrive - Wood Mackenzie Limited\Documents\Automation Work For Others\Jim Mitchell\Saudi Direct Burn V2\saudi_burn_forecast.py", line 784, in <module>
+    with pd.ExcelWriter(log_file, engine='openpyxl') as writer:
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+
+2025-09-03 12:36:44: ============================================================
+2025-09-03 12:36:44: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 12:36:49: Forecast completed successfully
+2025-09-03 12:40:06: ============================================================
+2025-09-03 12:40:06: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 12:40:13: Forecast completed successfully
+2025-09-03 12:43:27: ============================================================
+2025-09-03 12:43:27: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 12:43:34: Forecast completed successfully
+2025-09-03 12:47:25: ============================================================
+2025-09-03 12:47:25: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 12:47:32: Forecast completed successfully
+2025-09-03 12:49:30: ============================================================
+2025-09-03 12:49:30: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 12:49:36: Forecast completed successfully
+2025-09-03 12:57:19: ============================================================
+2025-09-03 12:57:19: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 12:57:24: ERROR: name 'is_backfill' is not defined
+Traceback (most recent call last):
+  File "c:\Users\i31851\OneDrive - Wood Mackenzie Limited\Documents\Automation Work For Others\Jim Mitchell\Saudi Direct Burn V2\saudi_burn_forecast.py", line 800, in <module>
+    chart_path = create_enhanced_forecast_chart(
+  File "c:\Users\i31851\OneDrive - Wood Mackenzie Limited\Documents\Automation Work For Others\Jim Mitchell\Saudi Direct Burn V2\saudi_burn_forecast.py", line 170, in create_enhanced_forecast_chart
+    for i, (date, value, backfill) in enumerate(zip(forecast_dates, forecast_values, is_backfill)):
+NameError: name 'is_backfill' is not defined
+
+2025-09-03 12:58:44: ============================================================
+2025-09-03 12:58:44: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 12:58:51: ERROR: name 'current_forecast' is not defined
+Traceback (most recent call last):
+  File "C:\Users\i31851\AppData\Local\Temp\ipykernel_32724\2180738136.py", line 798, in <module>
+    chart_path = create_enhanced_forecast_chart(
+  File "C:\Users\i31851\AppData\Local\Temp\ipykernel_32724\2180738136.py", line 219, in create_enhanced_forecast_chart
+    {forecasts[0]['month']}: {current_forecast['prediction']:.0f} kbd
+NameError: name 'current_forecast' is not defined
+
+2025-09-03 13:01:11: ============================================================
+2025-09-03 13:01:11: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:01:15: ERROR: name 'current_forecast' is not defined
+Traceback (most recent call last):
+  File "C:\Users\i31851\AppData\Local\Temp\ipykernel_32724\2180738136.py", line 798, in <module>
+    chart_path = create_enhanced_forecast_chart(
+  File "C:\Users\i31851\AppData\Local\Temp\ipykernel_32724\2180738136.py", line 219, in create_enhanced_forecast_chart
+    {forecasts[0]['month']}: {current_forecast['prediction']:.0f} kbd
+NameError: name 'current_forecast' is not defined
+
+2025-09-03 13:01:54: ============================================================
+2025-09-03 13:01:54: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:01:59: ERROR: name 'current_forecast' is not defined
+Traceback (most recent call last):
+  File "C:\Users\i31851\AppData\Local\Temp\ipykernel_35596\2180738136.py", line 798, in <module>
+    chart_path = create_enhanced_forecast_chart(
+  File "C:\Users\i31851\AppData\Local\Temp\ipykernel_35596\2180738136.py", line 219, in create_enhanced_forecast_chart
+    {forecasts[0]['month']}: {current_forecast['prediction']:.0f} kbd
+NameError: name 'current_forecast' is not defined
+
+2025-09-03 13:13:10: ============================================================
+2025-09-03 13:13:10: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:13:15: Forecast completed successfully
+2025-09-03 13:18:48: ============================================================
+2025-09-03 13:18:48: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:18:54: Forecast completed successfully
+2025-09-03 13:19:50: ============================================================
+2025-09-03 13:19:50: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:19:55: Forecast completed successfully
+2025-09-03 13:20:24: ============================================================
+2025-09-03 13:20:24: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:20:31: Forecast completed successfully
+2025-09-03 13:22:03: ============================================================
+2025-09-03 13:22:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:22:09: Forecast completed successfully
+2025-09-03 13:22:26: ============================================================
+2025-09-03 13:22:26: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:22:32: Forecast completed successfully
+2025-09-03 13:25:19: ============================================================
+2025-09-03 13:25:19: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:25:25: Forecast completed successfully
+2025-09-03 13:43:25: ============================================================
+2025-09-03 13:43:25: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:43:31: Forecast completed successfully
+2025-09-03 13:46:18: ============================================================
+2025-09-03 13:46:18: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:46:24: Forecast completed successfully
+2025-09-03 13:49:10: ============================================================
+2025-09-03 13:49:10: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:49:16: Forecast completed successfully
+2025-09-03 13:51:42: ============================================================
+2025-09-03 13:51:42: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:51:47: Forecast completed successfully
+2025-09-03 13:52:25: ============================================================
+2025-09-03 13:52:25: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:52:33: Forecast completed successfully
+2025-09-03 13:57:54: ============================================================
+2025-09-03 13:57:54: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:57:56: ERROR: 'tuple' object is not callable
+Traceback (most recent call last):
+  File "C:\Users\i31851\AppData\Local\Temp\ipykernel_37644\3822749268.py", line 299, in <module>
+    if burn_df.shape(1) == 2:
+TypeError: 'tuple' object is not callable
+
+2025-09-03 13:58:47: ============================================================
+2025-09-03 13:58:47: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:58:53: Forecast completed successfully
+2025-09-03 13:59:40: ============================================================
+2025-09-03 13:59:40: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 13:59:45: Forecast completed successfully
+2025-09-03 15:23:59: ============================================================
+2025-09-03 15:23:59: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 15:24:08: Forecast completed successfully
+2025-09-03 22:53:23: ============================================================
+2025-09-03 22:53:23: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 22:53:29: Forecast completed successfully
+2025-09-03 22:54:52: ============================================================
+2025-09-03 22:54:52: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-03 22:54:57: Forecast completed successfully
+2025-09-04 10:30:03: ============================================================
+2025-09-04 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-04 10:30:10: Forecast completed successfully
+2025-09-05 10:30:03: ============================================================
+2025-09-05 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-05 10:30:11: Forecast completed successfully
+2025-09-06 10:30:03: ============================================================
+2025-09-06 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-06 10:30:10: Forecast completed successfully
+2025-09-07 10:30:03: ============================================================
+2025-09-07 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-07 10:30:11: Forecast completed successfully
+2025-09-08 10:30:02: ============================================================
+2025-09-08 10:30:02: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-08 10:30:09: Forecast completed successfully
+2025-09-09 10:30:07: ============================================================
+2025-09-09 10:30:07: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-09 10:30:27: Forecast completed successfully
+2025-09-10 10:30:08: ============================================================
+2025-09-10 10:30:08: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-10 10:30:26: Forecast completed successfully
+2025-09-11 10:30:03: ============================================================
+2025-09-11 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-11 10:30:10: Forecast completed successfully
+2025-09-12 10:30:10: ============================================================
+2025-09-12 10:30:10: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-12 10:30:37: Forecast completed successfully
+2025-09-13 10:30:03: ============================================================
+2025-09-13 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-13 10:30:12: Forecast completed successfully
+2025-09-14 10:30:04: ============================================================
+2025-09-14 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-14 10:30:13: Forecast completed successfully
+2025-09-15 10:30:03: ============================================================
+2025-09-15 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-15 10:30:10: Forecast completed successfully
+2025-09-17 10:30:21: ============================================================
+2025-09-17 10:30:21: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-17 10:30:55: Forecast completed successfully
+2025-09-17 10:53:25: ============================================================
+2025-09-17 10:53:25: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-17 10:54:23: Forecast completed successfully
+2025-09-17 10:54:27: ============================================================
+2025-09-17 10:54:27: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-17 10:54:43: Forecast completed successfully
+2025-09-17 10:54:47: ============================================================
+2025-09-17 10:54:47: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-18 10:30:04: ============================================================
+2025-09-18 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-18 10:30:12: Forecast completed successfully
+2025-09-19 10:30:03: ============================================================
+2025-09-19 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-19 10:30:12: Forecast completed successfully
+2025-09-20 10:30:03: ============================================================
+2025-09-20 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-20 10:30:12: Forecast completed successfully
+2025-09-22 10:30:03: ============================================================
+2025-09-22 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-22 10:30:17: Forecast completed successfully
+2025-09-23 10:30:03: ============================================================
+2025-09-23 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-23 10:30:10: Forecast completed successfully
+2025-09-24 10:30:22: ============================================================
+2025-09-24 10:30:22: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-24 10:31:02: Forecast completed successfully
+2025-09-25 10:30:05: ============================================================
+2025-09-25 10:30:05: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-25 10:30:18: Forecast completed successfully
+2025-09-26 10:30:03: ============================================================
+2025-09-26 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-26 10:30:13: Forecast completed successfully
+2025-09-27 10:30:04: ============================================================
+2025-09-27 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-27 10:30:13: Forecast completed successfully
+2025-09-28 10:30:03: ============================================================
+2025-09-28 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-28 10:30:11: Forecast completed successfully
+2025-09-29 10:30:03: ============================================================
+2025-09-29 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-29 10:30:11: Forecast completed successfully
+2025-09-30 10:30:03: ============================================================
+2025-09-30 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-09-30 10:30:11: ERROR: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+Traceback (most recent call last):
+  File "C:\Users\i31851\OneDrive - Wood Mackenzie Limited\Documents\Automation Work For Others\Jim Mitchell\Saudi Direct Burn V2\saudi_burn_forecast.py", line 859, in <module>
+    with pd.ExcelWriter(log_file, engine='openpyxl') as writer:
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+
+2025-10-01 10:30:21: ============================================================
+2025-10-01 10:30:21: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-01 10:31:00: ERROR: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+Traceback (most recent call last):
+  File "C:\Users\i31851\OneDrive - Wood Mackenzie Limited\Documents\Automation Work For Others\Jim Mitchell\Saudi Direct Burn V2\saudi_burn_forecast.py", line 859, in <module>
+    with pd.ExcelWriter(log_file, engine='openpyxl') as writer:
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+
+2025-10-02 10:30:19: ============================================================
+2025-10-02 10:30:19: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-02 10:30:50: ERROR: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+Traceback (most recent call last):
+  File "C:\Users\i31851\OneDrive - Wood Mackenzie Limited\Documents\Automation Work For Others\Jim Mitchell\Saudi Direct Burn V2\saudi_burn_forecast.py", line 859, in <module>
+    with pd.ExcelWriter(log_file, engine='openpyxl') as writer:
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+
+2025-10-03 10:30:03: ============================================================
+2025-10-03 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-03 10:30:12: ERROR: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+Traceback (most recent call last):
+  File "C:\Users\i31851\OneDrive - Wood Mackenzie Limited\Documents\Automation Work For Others\Jim Mitchell\Saudi Direct Burn V2\saudi_burn_forecast.py", line 859, in <module>
+    with pd.ExcelWriter(log_file, engine='openpyxl') as writer:
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+
+2025-10-04 10:30:04: ============================================================
+2025-10-04 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-04 10:30:14: ERROR: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+Traceback (most recent call last):
+  File "C:\Users\i31851\OneDrive - Wood Mackenzie Limited\Documents\Automation Work For Others\Jim Mitchell\Saudi Direct Burn V2\saudi_burn_forecast.py", line 859, in <module>
+    with pd.ExcelWriter(log_file, engine='openpyxl') as writer:
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+
+2025-10-05 10:30:04: ============================================================
+2025-10-05 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-05 10:30:15: ERROR: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+Traceback (most recent call last):
+  File "C:\Users\i31851\OneDrive - Wood Mackenzie Limited\Documents\Automation Work For Others\Jim Mitchell\Saudi Direct Burn V2\saudi_burn_forecast.py", line 859, in <module>
+    with pd.ExcelWriter(log_file, engine='openpyxl') as writer:
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+  File "C:\Users\i31851\AppData\Local\anaconda3\envs\python39\lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\i31851\\OneDrive - Wood Mackenzie Limited\\Documents\\Automation Work For Others\\Jim Mitchell\\Saudi Direct Burn V2\\Saudi_Burn_Forecast_Log.xlsx'
+
+2025-10-06 14:45:35: ============================================================
+2025-10-06 14:45:35: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-06 14:45:57: Forecast completed successfully
+2025-10-07 10:30:03: ============================================================
+2025-10-07 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-07 10:30:16: Forecast completed successfully
+2025-10-09 10:30:04: ============================================================
+2025-10-09 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-09 10:30:17: Forecast completed successfully
+2025-10-10 10:30:04: ============================================================
+2025-10-10 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-10 10:30:16: Forecast completed successfully
+2025-10-13 10:30:03: ============================================================
+2025-10-13 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-13 10:30:17: Forecast completed successfully
+2025-10-14 10:30:03: ============================================================
+2025-10-14 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-14 10:30:11: Forecast completed successfully
+2025-10-15 10:30:03: ============================================================
+2025-10-15 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-15 10:30:12: Forecast completed successfully
+2025-10-16 10:30:03: ============================================================
+2025-10-16 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-16 10:30:15: Forecast completed successfully
+2025-10-17 10:30:03: ============================================================
+2025-10-17 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-17 10:30:13: Forecast completed successfully
+2025-10-18 10:30:03: ============================================================
+2025-10-18 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-18 10:30:13: Forecast completed successfully
+2025-10-19 10:30:03: ============================================================
+2025-10-19 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-19 10:30:11: Forecast completed successfully
+2025-10-20 10:30:03: ============================================================
+2025-10-20 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-20 10:30:14: Forecast completed successfully
+2025-10-21 10:30:03: ============================================================
+2025-10-21 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-21 10:30:15: Forecast completed successfully
+2025-10-22 10:30:07: ============================================================
+2025-10-22 10:30:07: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-22 10:30:28: Forecast completed successfully
+2025-10-23 10:30:03: ============================================================
+2025-10-23 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-23 10:30:14: Forecast completed successfully
+2025-10-25 11:22:56: ============================================================
+2025-10-25 11:22:56: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-25 11:23:13: Forecast completed successfully
+2025-10-26 19:07:28: ============================================================
+2025-10-26 19:07:28: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-26 19:07:42: Forecast completed successfully
+2025-10-27 10:30:03: ============================================================
+2025-10-27 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-27 10:30:13: Forecast completed successfully
+2025-10-28 10:30:06: ============================================================
+2025-10-28 10:30:06: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-28 10:30:21: Forecast completed successfully
+2025-10-29 10:30:07: ============================================================
+2025-10-29 10:30:07: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-29 10:30:21: Forecast completed successfully
+2025-10-30 10:30:04: ============================================================
+2025-10-30 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-30 10:30:18: Forecast completed successfully
+2025-10-31 10:30:04: ============================================================
+2025-10-31 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-10-31 10:30:15: Forecast completed successfully
+2025-11-01 10:30:04: ============================================================
+2025-11-01 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-01 10:30:14: Forecast completed successfully
+2025-11-02 10:30:03: ============================================================
+2025-11-02 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-02 10:30:15: Forecast completed successfully
+2025-11-03 10:30:02: ============================================================
+2025-11-03 10:30:02: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-03 10:30:11: Forecast completed successfully
+2025-11-04 10:30:04: ============================================================
+2025-11-04 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-04 10:30:18: Forecast completed successfully
+2025-11-05 10:30:03: ============================================================
+2025-11-05 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-05 10:30:17: Forecast completed successfully
+2025-11-06 10:30:03: ============================================================
+2025-11-06 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-06 10:30:13: Forecast completed successfully
+2025-11-07 10:30:03: ============================================================
+2025-11-07 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-07 10:30:11: Forecast completed successfully
+2025-11-08 10:30:02: ============================================================
+2025-11-08 10:30:02: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-08 10:30:10: Forecast completed successfully
+2025-11-09 10:30:03: ============================================================
+2025-11-09 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-09 10:30:14: Forecast completed successfully
+2025-11-10 10:30:02: ============================================================
+2025-11-10 10:30:02: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-10 10:30:13: Forecast completed successfully
+2025-11-11 10:30:04: ============================================================
+2025-11-11 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-11 10:30:14: Forecast completed successfully
+2025-11-12 10:30:04: ============================================================
+2025-11-12 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-12 10:30:16: Forecast completed successfully
+2025-11-13 10:30:03: ============================================================
+2025-11-13 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-13 10:30:16: Forecast completed successfully
+2025-11-13 14:31:19: ============================================================
+2025-11-13 14:31:19: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-13 14:31:24: Forecast completed successfully
+2025-11-13 14:42:33: ============================================================
+2025-11-13 14:42:33: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-13 14:42:39: Forecast completed successfully
+2025-11-13 14:50:18: ============================================================
+2025-11-13 14:50:18: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-13 14:50:23: Forecast completed successfully
+2025-11-13 14:56:08: ============================================================
+2025-11-13 14:56:08: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-13 14:56:14: Forecast completed successfully
+2025-11-13 15:06:53: ============================================================
+2025-11-13 15:06:53: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-13 15:06:59: Forecast completed successfully
+2025-11-14 10:30:02: ============================================================
+2025-11-14 10:30:02: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-14 10:30:11: Forecast completed successfully
+2025-11-15 10:30:03: ============================================================
+2025-11-15 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-15 10:30:15: Forecast completed successfully
+2025-11-16 10:30:03: ============================================================
+2025-11-16 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-16 10:30:15: Forecast completed successfully
+2025-11-17 10:30:02: ============================================================
+2025-11-17 10:30:02: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-17 10:30:15: Forecast completed successfully
+2025-11-18 10:30:03: ============================================================
+2025-11-18 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-18 10:30:12: Forecast completed successfully
+2025-11-19 10:30:03: ============================================================
+2025-11-19 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-19 10:30:13: Forecast completed successfully
+2025-11-20 10:30:02: ============================================================
+2025-11-20 10:30:02: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-20 10:30:18: Forecast completed successfully
+2025-11-21 10:30:03: ============================================================
+2025-11-21 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-21 10:30:13: Forecast completed successfully
+2025-11-22 10:30:03: ============================================================
+2025-11-22 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-22 10:30:12: Forecast completed successfully
+2025-11-24 10:30:03: ============================================================
+2025-11-24 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-24 10:30:16: Forecast completed successfully
+2025-11-25 10:30:03: ============================================================
+2025-11-25 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-25 10:30:12: Forecast completed successfully
+2025-11-26 10:30:02: ============================================================
+2025-11-26 10:30:02: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-11-26 10:30:13: Forecast completed successfully
+2025-12-01 10:30:03: ============================================================
+2025-12-01 10:30:03: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-12-01 10:30:13: Forecast completed successfully
+2025-12-02 10:30:05: ============================================================
+2025-12-02 10:30:05: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-12-02 10:30:21: Forecast completed successfully
+2025-12-03 10:30:04: ============================================================
+2025-12-03 10:30:04: STARTING SAUDI CRUDE BURN FORECAST AUTOMATION
+2025-12-03 10:30:14: Forecast completed successfully
