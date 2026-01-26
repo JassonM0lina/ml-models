@@ -289,3 +289,25 @@ if __name__ == "__main__":
 
     # Print final summary
     print("\n" + "=" * 60)
+    #TODO: Modify the function calls as needed.
+
+    # Step 1: Data Preprocessing
+    train_data, val_data, test_data, metadata = load_and_preprocess_data(args)
+
+    # Step 2: Model Training
+    model = train_model(train_data, metadata, args)
+
+    # Step 3: Model Evaluation
+    evaluation = evaluate_model(model, val_data, test_data)
+
+    # Save outputs
+    save_outputs(model[0], args, evaluation)  # Pass just the fitted model
+
+    # Print final summary
+    print("\\n" + "=" * 60)
+    print("PIPELINE COMPLETE")
+    print("=" * 60)
+
+
+if __name__ == "__main__":
+    main()

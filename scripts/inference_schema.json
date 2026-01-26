@@ -1,24 +1,47 @@
 {
   "name": "Saudi Oil Burn Forecaster",
-  "info": "Time series forecasting model that predicts Saudi Arabia's oil consumption/burn using SARIMA (Seasonal AutoRegressive Integrated Moving Average). The model analyzes historical oil consumption patterns and generates forecasts with confidence intervals.",
-  "model_type": "time_series_forecasting",
-  "parameters": [
-    {
+  "info": "Time series forecasting model to predict oil consumption/burn in Saudi Arabia. Uses SARIMA (Seasonal AutoRegressive Integrated Moving Average) to forecast monthly oil consumption in thousand barrels per day, incorporating seasonal patterns and trends in Saudi Arabia's oil demand.",
+  "model_type": "time_series",
+  "parameters": {
+    "forecast_steps": {
       "name": "forecast_steps",
-      "tooltip": "Number of time periods (months) to forecast ahead. Default is 12 months (1 year).",
-      "created_at": "2026-01-23T22:26:02.430649+00:00",
+      "tooltip": "Number of future time periods (months) to forecast. Typical range is 1-24 months for reliable predictions.",
+      "created_at": "2026-01-23T22:30:00.000000+00:00",
       "display_type": "slider",
       "unit": "months",
       "default_value": 12,
       "min_value": 1,
-      "max_value": 60,
+      "max_value": 24,
       "step_value": 1,
+      "required": true
+    },
+    "start_date": {
+      "name": "start_date",
+      "tooltip": "Start date for the forecast period. Should be a future date from when you want predictions to begin.",
+      "created_at": "2026-01-23T22:30:00.000000+00:00",
+      "display_type": "date",
+      "default_value": "2024-01-01",
+      "required": true
+    },
+    "confidence_level": {
+      "name": "confidence_level",
+      "tooltip": "Confidence level for prediction intervals. Higher values give wider confidence bands around forecasts.",
+      "created_at": "2026-01-23T22:30:00.000000+00:00",
+      "display_type": "selectbox",
+      "unit": "percent",
+      "default_value": 95,
+      "options": [
+        80,
+        90,
+        95,
+        99
+      ],
       "required": false
     },
-    {
-      "name": "include_history",
-      "tooltip": "Whether to include historical data context in the response for visualization purposes.",
-      "created_at": "2026-01-23T22:26:02.430649+00:00",
+    "include_historical": {
+      "name": "include_historical",
+      "tooltip": "Include recent historical fitted values in the response for context and trend visualization.",
+      "created_at": "2026-01-23T22:30:00.000000+00:00",
       "display_type": "selectbox",
       "default_value": false,
       "options": [
@@ -27,16 +50,32 @@
       ],
       "required": false
     }
-  ],
+  },
   "output": {
-    "description": "Time series forecast with confidence intervals",
+    "description": "Returns oil consumption forecasts with confidence intervals",
     "format": {
-      "forecast_dates": "Array of forecast dates in YYYY-MM-DD format",
-      "forecasted_values": "Array of predicted oil consumption values in million barrels per day",
-      "lower_confidence_interval": "Array of lower bound confidence interval values",
-      "upper_confidence_interval": "Array of upper bound confidence interval values",
-      "units": "Unit of measurement (Million barrels per day)",
-      "forecast_steps": "Number of forecast periods generated"
+      "model_type": "Type of forecasting model used (SARIMA or Seasonal Naive)",
+      "model_parameters": "Key model parameters and diagnostics",
+      "forecast_summary": {
+        "num_periods": "Number of forecast periods",
+        "start_date": "Forecast start date",
+        "confidence_level": "Confidence level used",
+        "mean_forecast": "Average forecasted consumption",
+        "std_forecast": "Standard deviation of forecasts",
+        "min_forecast": "Minimum forecasted value",
+        "max_forecast": "Maximum forecasted value",
+        "units": "thousand_barrels_per_day"
+      },
+      "forecast_data": [
+        {
+          "date": "Forecast date (YYYY-MM-DD)",
+          "forecast": "Point forecast value",
+          "lower_bound": "Lower confidence bound",
+          "upper_bound": "Upper confidence bound",
+          "period": "Forecast period number"
+        }
+      ],
+      "historical_data": "Optional: Recent historical values for context"
     }
   }
 }

@@ -78,3 +78,9 @@ def output_fn(predictions, response_content_type):
         })
     else:
         raise ValueError(f"Unsupported response type: {response_content_type}")
+def output_fn(predictions, response_content_type):
+    """Format output response"""
+    if response_content_type == "application/json":
+        # Return properly formatted JSON response
+        return json.dumps(predictions, indent=2)
+    else:
