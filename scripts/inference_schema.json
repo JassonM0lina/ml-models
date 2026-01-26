@@ -1,25 +1,42 @@
 {
-  "name": "TODO: Model Display Name",
-  "info": "TODO: Description of what this model does",
-  "model_type": "TODO: regression | classification | time_series | forecasting",
-  "parameters": {
-    "TODO_PARAM_KEY": {
-      "name": "TODO: Parameter Display Name",
-      "tooltip": "TODO: Help text explaining this parameter",
-      "display_type": "TODO: number | slider | text | array | selectbox | date | boolean",
-      "default_value": "TODO: default value",
-      "required": true
-    }
-  },
-  "output": {
-    "predictions": {
-      "name": "Predictions",
-      "type": "array",
-      "unit": ""
+  "name": "Saudi Oil Burn Forecaster",
+  "info": "Time series forecasting model that predicts Saudi Arabia's oil consumption/burn using SARIMA (Seasonal AutoRegressive Integrated Moving Average). The model analyzes historical oil consumption patterns and generates forecasts with confidence intervals.",
+  "model_type": "time_series_forecasting",
+  "parameters": [
+    {
+      "name": "forecast_steps",
+      "tooltip": "Number of time periods (months) to forecast ahead. Default is 12 months (1 year).",
+      "created_at": "2026-01-23T22:26:02.430649+00:00",
+      "display_type": "slider",
+      "unit": "months",
+      "default_value": 12,
+      "min_value": 1,
+      "max_value": 60,
+      "step_value": 1,
+      "required": false
     },
-    "count": {
-      "name": "Count",
-      "type": "number"
+    {
+      "name": "include_history",
+      "tooltip": "Whether to include historical data context in the response for visualization purposes.",
+      "created_at": "2026-01-23T22:26:02.430649+00:00",
+      "display_type": "selectbox",
+      "default_value": false,
+      "options": [
+        true,
+        false
+      ],
+      "required": false
+    }
+  ],
+  "output": {
+    "description": "Time series forecast with confidence intervals",
+    "format": {
+      "forecast_dates": "Array of forecast dates in YYYY-MM-DD format",
+      "forecasted_values": "Array of predicted oil consumption values in million barrels per day",
+      "lower_confidence_interval": "Array of lower bound confidence interval values",
+      "upper_confidence_interval": "Array of upper bound confidence interval values",
+      "units": "Unit of measurement (Million barrels per day)",
+      "forecast_steps": "Number of forecast periods generated"
     }
   }
 }
