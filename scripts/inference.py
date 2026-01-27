@@ -32,7 +32,7 @@ def input_fn(request_body, request_content_type):
         data = json.loads(request_body)
         # TODO: Parse your expected input format
         # Example: {"steps": 12} for forecasting
-        # Example: {"features": [...]} for regression
+        # Example: {"features": {...}} for regression
         
         # Extract features from the request
         features = data.get("features", {})
@@ -61,7 +61,8 @@ def predict_fn(input_data, model):
     temp_lag1 = input_data.get("temp_lag1", 70.0)  # Default previous day temp
     temp_lag2 = input_data.get("temp_lag2", 68.0)  # Default temp 2 days ago
     
-    # Create feature array in the same order as training
+    # FIXED: Create feature array in EXACT same order as training
+    # Order: ['day_of_year', 'month', 'year', 'temp_lag1', 'temp_lag2']
     features = np.array([[day_of_year, month, year, temp_lag1, temp_lag2]])
     
     # Generate prediction

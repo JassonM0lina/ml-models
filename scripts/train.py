@@ -198,15 +198,17 @@ def train_model(train_data, val_data, args):
     # model = YourModel()
     # model.fit(X_train, y_train)
     
+    # FIXED: Define explicit feature order to match inference script
+    feature_cols = ['day_of_year', 'month', 'year', 'temp_lag1', 'temp_lag2']
+    
     # Prepare features and target
-    feature_cols = [col for col in train_data.columns if col not in ['temperature', 'date']]
     X_train = train_data[feature_cols]
     y_train = train_data['temperature']
     
     X_val = val_data[feature_cols]
     y_val = val_data['temperature']
     
-    print(f"  Training features: {feature_cols}")
+    print(f"  Training features (ordered): {feature_cols}")
     print(f"  Training samples: {len(X_train)}")
     
     # Initialize and train linear regression model
@@ -247,8 +249,10 @@ def evaluate_model(model, test_data):
     # y_test = test_data['target']
     # predictions = model.predict(X_test)
     
+    # FIXED: Use same explicit feature order as training
+    feature_cols = ['day_of_year', 'month', 'year', 'temp_lag1', 'temp_lag2']
+    
     # Prepare test features and target
-    feature_cols = [col for col in test_data.columns if col not in ['temperature', 'date']]
     X_test = test_data[feature_cols]
     y_test = test_data['temperature']
     
