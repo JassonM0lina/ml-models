@@ -5,6 +5,7 @@ Inference Script Template for SageMaker Serverless Endpoint
 import os
 import json
 import pickle
+import numpy as np
 
 
 def model_fn(model_dir):
@@ -32,7 +33,10 @@ def input_fn(request_body, request_content_type):
         # TODO: Parse your expected input format
         # Example: {"steps": 12} for forecasting
         # Example: {"features": [...]} for regression
-        return data
+        
+        # Extract features from the request
+        features = data.get("features", {})
+        return features
     else:
         raise ValueError(f"Unsupported content type: {request_content_type}")
 
@@ -49,8 +53,19 @@ def predict_fn(input_data, model):
     # Example for regression:
     # features = input_data.get("features")
     # predictions = model.predict(features)
-
-    predictions = []  # TODO: Replace with actual predictions
+    
+    # Extract features for linear regression prediction
+    day_of_year = input_data.get("day_of_year", 180)  # Default to mid-year
+    month = input_data.get("month", 6)  # Default to June
+    year = input_data.get("year", 2024)  # Default year
+    temp_lag1 = input_data.get("temp_lag1", 70.0)  # Default previous day temp
+    temp_lag2 = input_data.get("temp_lag2", 68.0)  # Default temp 2 days ago
+    
+    # Create feature array in the same order as training
+    features = np.array([[day_of_year, month, year, temp_lag1, temp_lag2]])
+    
+    # Generate prediction
+    predictions = model.predict(features)
 
     # Convert to list for JSON serialization
     if hasattr(predictions, 'tolist'):

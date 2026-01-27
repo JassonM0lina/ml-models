@@ -17,6 +17,9 @@ from math import sqrt
 # TODO: Add your model-specific imports here
 # Example: from sklearn.linear_model import LinearRegression
 # Example: from statsmodels.tsa.arima.model import ARIMA
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, r2_score
+import numpy as np
 
 
 def upload_evaluation_to_s3(evaluation_data: dict, eval_s3_path: str) -> str:
@@ -68,6 +71,8 @@ def parse_args():
 
     # TODO: Add your model hyperparameters here
     # Example: parser.add_argument("--learning-rate", type=float, default=0.01)
+    parser.add_argument("--fit-intercept", type=bool, default=True, help="Whether to calculate intercept")
+    parser.add_argument("--normalize", type=bool, default=False, help="Whether to normalize features")
 
     # Data split ratios
     parser.add_argument("--train-split", type=float, default=0.7)
@@ -108,6 +113,24 @@ def load_and_preprocess_data(input_path, train_split, validation_split, test_spl
 
     # TODO: Add your data preprocessing logic here
     # Example: Parse dates, handle missing values, feature engineering
+    
+    # Convert date column to datetime if exists
+    if 'date' in df.columns:
+        df['date'] = pd.to_datetime(df['date'])
+        df['day_of_year'] = df['date'].dt.dayofyear
+        df['month'] = df['date'].dt.month
+        df['year'] = df['date'].dt.year
+    
+    # Handle missing values by forward fill
+    df = df.fillna(method='ffill').fillna(method='bfill')
+    
+    # Create lag features for temperature if available
+    if 'temperature' in df.columns:
+        df['temp_lag1'] = df['temperature'].shift(1)
+        df['temp_lag2'] = df['temperature'].shift(2)
+    
+    # Drop rows with NaN values created by lag features
+    df = df.dropna()
 
     print(f"  Loaded {len(df)} rows")
 
@@ -174,15 +197,32 @@ def train_model(train_data, val_data, args):
     # y_train = train_data['target']
     # model = YourModel()
     # model.fit(X_train, y_train)
-
-    model = None  # TODO: Replace with your trained model
+    
+    # Prepare features and target
+    feature_cols = [col for col in train_data.columns if col not in ['temperature', 'date']]
+    X_train = train_data[feature_cols]
+    y_train = train_data['temperature']
+    
+    X_val = val_data[feature_cols]
+    y_val = val_data['temperature']
+    
+    print(f"  Training features: {feature_cols}")
+    print(f"  Training samples: {len(X_train)}")
+    
+    # Initialize and train linear regression model
+    model = LinearRegression(fit_intercept=args.fit_intercept)
+    model.fit(X_train, y_train)
+    
+    print(f"  Model coefficients: {len(model.coef_)} features")
+    print(f"  Model intercept: {model.intercept_:.4f}")
 
     print("  Model trained successfully")
 
     # Validate on validation set
     print(f"\nValidating on {len(val_data)} samples...")
     # TODO: Calculate validation metrics
-    val_rmse = 0.0  # TODO: Replace with actual validation RMSE
+    val_predictions = model.predict(X_val)
+    val_rmse = sqrt(mean_squared_error(y_val, val_predictions))
 
     print(f"  Validation RMSE: {val_rmse:.2f}")
 
@@ -206,17 +246,27 @@ def evaluate_model(model, test_data):
     # X_test = test_data.drop('target', axis=1)
     # y_test = test_data['target']
     # predictions = model.predict(X_test)
-
-    predictions = []  # TODO: Replace with actual predictions
-    actuals = []      # TODO: Replace with actual values
-    errors = []       # TODO: Replace with actual errors
+    
+    # Prepare test features and target
+    feature_cols = [col for col in test_data.columns if col not in ['temperature', 'date']]
+    X_test = test_data[feature_cols]
+    y_test = test_data['temperature']
+    
+    # Generate predictions
+    predictions = model.predict(X_test)
+    actuals = y_test.values
+    errors = predictions - actuals
 
     # Calculate metrics
     # TODO: Replace with actual metric calculations
-    rmse = 0.0
-    mae = 0.0
-    mape = 0.0
-    r2 = 0.0
+    rmse = sqrt(mean_squared_error(actuals, predictions))
+    mae = mean_absolute_error(actuals, predictions)
+    
+    # Calculate MAPE (Mean Absolute Percentage Error)
+    mape = np.mean(np.abs((actuals - predictions) / actuals)) * 100
+    
+    # Calculate R-squared
+    r2 = r2_score(actuals, predictions)
 
     print(f"\nTest Set Metrics:")
     print(f"  RMSE: {rmse:.2f}")
@@ -231,9 +281,9 @@ def evaluate_model(model, test_data):
             "mape": mape,
             "r2": r2
         },
-        "predictions": predictions,
-        "actuals": actuals,
-        "errors": errors
+        "predictions": predictions.tolist(),
+        "actuals": actuals.tolist(),
+        "errors": errors.tolist()
     }
 
 
@@ -274,7 +324,7 @@ def save_outputs(model, args, data_quality_report, evaluation_results):
 
     # Save metadata
     metadata = {
-        "model_type": "TODO",  # TODO: Replace with your model type
+        "model_type": "linear_regression",
         "data_quality": data_quality_report,
         "test_metrics": evaluation_results["metrics"]
     }

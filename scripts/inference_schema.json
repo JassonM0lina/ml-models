@@ -1,7 +1,70 @@
 {
-  "name": "",
-  "info": "",
-  "model_type": "",
-  "parameters": {},
-  "output": {}
+  "name": "US Temperature Prediction",
+  "info": "Predicts US temperature in Fahrenheit based on temporal features and recent temperature history using linear regression",
+  "model_type": "regression",
+  "parameters": {
+    "day_of_year": {
+      "name": "Day of Year",
+      "tooltip": "Day of the year (1-365) for seasonal temperature patterns",
+      "display_type": "slider",
+      "default_value": 180,
+      "unit": "day",
+      "min_value": 1,
+      "max_value": 365,
+      "step_value": 1,
+      "required": true
+    },
+    "month": {
+      "name": "Month",
+      "tooltip": "Month of the year (1-12) for temperature prediction",
+      "display_type": "slider",
+      "default_value": 6,
+      "unit": "month",
+      "min_value": 1,
+      "max_value": 12,
+      "step_value": 1,
+      "required": true
+    },
+    "year": {
+      "name": "Year",
+      "tooltip": "Year for temperature prediction (accounts for long-term climate trends)",
+      "display_type": "number",
+      "default_value": 2024,
+      "unit": "year",
+      "min_value": 2000,
+      "max_value": 2030,
+      "required": true
+    },
+    "temp_lag1": {
+      "name": "Previous Day Temperature",
+      "tooltip": "Temperature from the previous day in Fahrenheit (helps predict daily variations)",
+      "display_type": "number",
+      "default_value": 70.0,
+      "unit": "\u00b0F",
+      "min_value": -50.0,
+      "max_value": 120.0,
+      "required": true
+    },
+    "temp_lag2": {
+      "name": "Temperature 2 Days Ago",
+      "tooltip": "Temperature from 2 days ago in Fahrenheit (captures short-term weather patterns)",
+      "display_type": "number",
+      "default_value": 68.0,
+      "unit": "\u00b0F",
+      "min_value": -50.0,
+      "max_value": 120.0,
+      "required": true
+    }
+  },
+  "output": {
+    "predictions": {
+      "name": "Predicted Temperature",
+      "type": "array",
+      "unit": "\u00b0F"
+    },
+    "count": {
+      "name": "Number of Predictions",
+      "type": "number"
+    }
+  }
 }
