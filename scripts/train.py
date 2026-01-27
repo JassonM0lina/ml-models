@@ -97,6 +97,9 @@ def load_and_preprocess_data(input_path, train_split, validation_split, test_spl
     print("=" * 60)
     print("STEP 1: DATA PREPROCESSING")
     print("=" * 60)
+    print("------------------------------------")
+    print("load and preprocesing is using the last commit from 27-jan")
+    print("------------------------------------")
 
     # Find data file
     data_file = None
@@ -190,6 +193,9 @@ def train_model(train_data, val_data, args):
     print("\n" + "=" * 60)
     print("STEP 2: MODEL TRAINING")
     print("=" * 60)
+    print("------------------------------------")
+    print("train_model is using the last commit from 27-jan")
+    print("------------------------------------")
 
     # TODO: Implement your model training logic here
     # Example:
@@ -240,6 +246,9 @@ def evaluate_model(model, test_data):
     print("\n" + "=" * 60)
     print("STEP 3: MODEL EVALUATION")
     print("=" * 60)
+    print("------------------------------------")
+    print("evaluate_model is using the last commit from 27-jan")
+    print("------------------------------------")
 
     print(f"\nEvaluating on {len(test_data)} test samples...")
 
@@ -300,7 +309,10 @@ def save_outputs(model, args, data_quality_report, evaluation_results):
     print("\n" + "=" * 60)
     print("SAVING OUTPUTS")
     print("=" * 60)
-
+    print("------------------------------------")
+    print("save_outputs is using the last commit from 27-jan")
+    print("------------------------------------")
+    
     # Save model
     print(f"\nSaving model to: {args.model_dir}")
     os.makedirs(args.model_dir, exist_ok=True)
@@ -388,7 +400,9 @@ def main():
     print("TRAINING PIPELINE")
     print("Preprocess → Train → Evaluate")
     print("=" * 60)
-
+    print("------------------------------------")
+    print("main is using the last commit from 27-jan")
+    print("------------------------------------")
     # Step 1: Data Preprocessing
     train_data, val_data, test_data, data_quality_report = load_and_preprocess_data(
         args.train,
