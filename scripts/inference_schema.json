@@ -1,7 +1,65 @@
 {
-  "name": "",
-  "info": "",
-  "model_type": "",
-  "parameters": {},
-  "output": {}
+  "name": "Sales Forecast Price Market Model",
+  "info": "Linear regression model for predicting market prices based on sales forecast data. Supports multiple features for comprehensive price prediction analysis.",
+  "model_type": "regression",
+  "parameters": {
+    "feature1": {
+      "name": "Market Volume",
+      "tooltip": "The market volume or quantity sold in the forecast period",
+      "display_type": "number",
+      "default_value": 1000,
+      "unit": "units",
+      "min_value": 0,
+      "max_value": 10000,
+      "required": true
+    },
+    "feature2": {
+      "name": "Seasonal Factor",
+      "tooltip": "Seasonal adjustment factor (0.5-2.0) where 1.0 is baseline, >1.0 indicates higher demand seasons",
+      "display_type": "slider",
+      "default_value": 1.0,
+      "unit": "multiplier",
+      "min_value": 0.5,
+      "max_value": 2.0,
+      "step_value": 0.1,
+      "required": true
+    },
+    "feature3": {
+      "name": "Economic Index",
+      "tooltip": "Economic health indicator (0-100) where higher values indicate stronger economic conditions",
+      "display_type": "slider",
+      "default_value": 70,
+      "unit": "index",
+      "min_value": 0,
+      "max_value": 100,
+      "step_value": 5,
+      "required": true
+    },
+    "feature4": {
+      "name": "Competition Level",
+      "tooltip": "Market competition intensity level from low to high competition",
+      "display_type": "selectbox",
+      "default_value": 2,
+      "options": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "required": true
+    }
+  },
+  "output": {
+    "predictions": {
+      "name": "Predicted Price",
+      "type": "array",
+      "unit": "currency"
+    },
+    "count": {
+      "name": "Number of Predictions",
+      "type": "number",
+      "unit": "count"
+    }
+  }
 }

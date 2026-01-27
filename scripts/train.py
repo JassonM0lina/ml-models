@@ -15,8 +15,9 @@ from sklearn.metrics import mean_squared_error
 from math import sqrt
 
 # TODO: Add your model-specific imports here
-# Example: from sklearn.linear_model import LinearRegression
-# Example: from statsmodels.tsa.arima.model import ARIMA
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, r2_score
+import numpy as np
 
 
 def upload_evaluation_to_s3(evaluation_data: dict, eval_s3_path: str) -> str:
@@ -67,7 +68,8 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     # TODO: Add your model hyperparameters here
-    # Example: parser.add_argument("--learning-rate", type=float, default=0.01)
+    parser.add_argument("--fit-intercept", type=bool, default=True, help="Whether to fit intercept in linear regression")
+    parser.add_argument("--normalize", type=bool, default=False, help="Whether to normalize features")
 
     # Data split ratios
     parser.add_argument("--train-split", type=float, default=0.7)
@@ -107,9 +109,16 @@ def load_and_preprocess_data(input_path, train_split, validation_split, test_spl
     df = pd.read_csv(data_file)
 
     # TODO: Add your data preprocessing logic here
-    # Example: Parse dates, handle missing values, feature engineering
-
+    # Parse date column if present
+    if 'date' in df.columns:
+        df['date'] = pd.to_datetime(df['date'])
+        df = df.sort_values('date').reset_index(drop=True)
+    
+    # Handle missing values by forward fill
+    df = df.fillna(method='ffill').fillna(method='bfill')
+    
     print(f"  Loaded {len(df)} rows")
+    print(f"  Columns: {list(df.columns)}")
 
     # Data quality checks
     print("\nRunning data quality checks...")
@@ -169,20 +178,44 @@ def train_model(train_data, val_data, args):
     print("=" * 60)
 
     # TODO: Implement your model training logic here
-    # Example:
-    # X_train = train_data.drop('target', axis=1)
-    # y_train = train_data['target']
-    # model = YourModel()
-    # model.fit(X_train, y_train)
-
-    model = None  # TODO: Replace with your trained model
-
-    print("  Model trained successfully")
+    # Prepare features and target
+    feature_columns = [col for col in train_data.columns if col not in ['price', 'date']]
+    if not feature_columns:
+        # If no specific features, create simple features from index
+        X_train = np.array(range(len(train_data))).reshape(-1, 1)
+        X_val = np.array(range(len(train_data), len(train_data) + len(val_data))).reshape(-1, 1)
+    else:
+        X_train = train_data[feature_columns].values
+        X_val = val_data[feature_columns].values
+    
+    # Assume 'price' is the target column
+    target_column = 'price' if 'price' in train_data.columns else train_data.columns[-1]
+    y_train = train_data[target_column].values
+    y_val = val_data[target_column].values
+    
+    print(f"  Training on {len(feature_columns)} features")
+    print(f"  Target column: {target_column}")
+    
+    # Initialize and train linear regression model
+    model = LinearRegression(
+        fit_intercept=args.fit_intercept,
+        normalize=getattr(args, 'normalize', False)  # Handle older sklearn versions
+    )
+    
+    model.fit(X_train, y_train)
+    print("  Linear regression model trained successfully")
+    
+    # Print model coefficients
+    print(f"  Intercept: {model.intercept_:.4f}")
+    if len(feature_columns) > 0:
+        for i, coef in enumerate(model.coef_):
+            print(f"  Coefficient {feature_columns[i] if i < len(feature_columns) else i}: {coef:.4f}")
 
     # Validate on validation set
     print(f"\nValidating on {len(val_data)} samples...")
     # TODO: Calculate validation metrics
-    val_rmse = 0.0  # TODO: Replace with actual validation RMSE
+    val_predictions = model.predict(X_val)
+    val_rmse = sqrt(mean_squared_error(y_val, val_predictions))
 
     print(f"  Validation RMSE: {val_rmse:.2f}")
 
@@ -202,21 +235,31 @@ def evaluate_model(model, test_data):
     print(f"\nEvaluating on {len(test_data)} test samples...")
 
     # TODO: Implement your evaluation logic here
-    # Example:
-    # X_test = test_data.drop('target', axis=1)
-    # y_test = test_data['target']
-    # predictions = model.predict(X_test)
-
-    predictions = []  # TODO: Replace with actual predictions
-    actuals = []      # TODO: Replace with actual values
-    errors = []       # TODO: Replace with actual errors
+    feature_columns = [col for col in test_data.columns if col not in ['price', 'date']]
+    target_column = 'price' if 'price' in test_data.columns else test_data.columns[-1]
+    
+    if not feature_columns:
+        # Use index as feature if no specific features
+        X_test = np.array(range(len(test_data))).reshape(-1, 1)
+    else:
+        X_test = test_data[feature_columns].values
+    
+    y_test = test_data[target_column].values
+    predictions = model.predict(X_test)
+    
+    actuals = y_test.tolist()
+    predictions_list = predictions.tolist()
+    errors = (predictions - y_test).tolist()
 
     # Calculate metrics
-    # TODO: Replace with actual metric calculations
-    rmse = 0.0
-    mae = 0.0
-    mape = 0.0
-    r2 = 0.0
+    rmse = sqrt(mean_squared_error(y_test, predictions))
+    mae = mean_absolute_error(y_test, predictions)
+    
+    # Calculate MAPE (Mean Absolute Percentage Error)
+    mape = np.mean(np.abs((y_test - predictions) / np.where(y_test == 0, 1, y_test))) * 100
+    
+    # Calculate R²
+    r2 = r2_score(y_test, predictions)
 
     print(f"\nTest Set Metrics:")
     print(f"  RMSE: {rmse:.2f}")
@@ -231,7 +274,7 @@ def evaluate_model(model, test_data):
             "mape": mape,
             "r2": r2
         },
-        "predictions": predictions,
+        "predictions": predictions_list,
         "actuals": actuals,
         "errors": errors
     }
@@ -274,7 +317,7 @@ def save_outputs(model, args, data_quality_report, evaluation_results):
 
     # Save metadata
     metadata = {
-        "model_type": "TODO",  # TODO: Replace with your model type
+        "model_type": "linear_regression",
         "data_quality": data_quality_report,
         "test_metrics": evaluation_results["metrics"]
     }
