@@ -95,6 +95,7 @@ def load_and_preprocess_data(input_path, train_split, validation_split, test_spl
     """Load raw data and split into train/validation/test"""
     print("=" * 60)
     print("STEP 1: DATA PREPROCESSING")
+    print("modifying load_and_preprocess_data check new commit ")
     print("=" * 60)
 
     # Find data file
@@ -184,8 +185,9 @@ def train_model(train_data, val_data, args):
     """Train model and validate"""
     print("\n" + "=" * 60)
     print("STEP 2: MODEL TRAINING")
+    print("modifying train_model check new commit ")
     print("=" * 60)
-
+    
     # TODO: Implement your model training logic here
     # Separate features and target
     target_col = 'price'
@@ -251,6 +253,7 @@ def evaluate_model(model_obj, test_data):
     """Evaluate model on test set"""
     print("\n" + "=" * 60)
     print("STEP 3: MODEL EVALUATION")
+    print("modifying evaluate_model check new commit ")
     print("=" * 60)
 
     print(f"\nEvaluating on {len(test_data)} test samples...")
@@ -309,6 +312,7 @@ def save_outputs(model, args, data_quality_report, evaluation_results):
     """Save model and evaluation outputs"""
     print("\n" + "=" * 60)
     print("SAVING OUTPUTS")
+    print("modifying save_outputs check new commit ")
     print("=" * 60)
 
     # Save model
@@ -397,8 +401,9 @@ def main():
     print("\n" + "=" * 60)
     print("TRAINING PIPELINE")
     print("Preprocess → Train → Evaluate")
+    print("modifying main check new commit ")
     print("=" * 60)
-
+    
     # Step 1: Data Preprocessing
     train_data, val_data, test_data, data_quality_report = load_and_preprocess_data(
         args.train,
@@ -419,6 +424,7 @@ def main():
     # Print final summary
     print("\n" + "=" * 60)
     print("PIPELINE COMPLETE")
+    print("modifying main PIPELINE complete new commit ")
     print("=" * 60)
     print(f"  RMSE: {eval_report['metrics']['rmse']:.2f}")
     print(f"  MAE: {eval_report['metrics']['mae']:.2f}")
