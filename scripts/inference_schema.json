@@ -1,7 +1,80 @@
 {
-  "name": "",
-  "info": "",
-  "model_type": "",
-  "parameters": {},
-  "output": {}
+  "name": "Ford Brand Price Predictor",
+  "info": "Linear regression model that predicts Ford vehicle prices based on car characteristics like year, mileage, engine size, fuel type, and transmission type.",
+  "model_type": "regression",
+  "parameters": {
+    "year": {
+      "name": "Year",
+      "tooltip": "The manufacturing year of the Ford vehicle",
+      "display_type": "slider",
+      "default_value": 2018,
+      "unit": "year",
+      "min_value": 2000,
+      "max_value": 2024,
+      "step_value": 1,
+      "required": true
+    },
+    "mileage": {
+      "name": "Mileage",
+      "tooltip": "Total miles driven by the vehicle",
+      "display_type": "number",
+      "default_value": 45000,
+      "unit": "miles",
+      "min_value": 0,
+      "max_value": 300000,
+      "required": true
+    },
+    "engine_size": {
+      "name": "Engine Size",
+      "tooltip": "Engine displacement in liters",
+      "display_type": "slider",
+      "default_value": 2.0,
+      "unit": "L",
+      "min_value": 1.0,
+      "max_value": 6.0,
+      "step_value": 0.1,
+      "required": true
+    },
+    "fuel_type": {
+      "name": "Fuel Type",
+      "tooltip": "Type of fuel the vehicle uses",
+      "display_type": "selectbox",
+      "default_value": "Gasoline",
+      "options": [
+        "Gasoline",
+        "Diesel",
+        "Hybrid",
+        "Electric"
+      ],
+      "required": true
+    },
+    "transmission": {
+      "name": "Transmission",
+      "tooltip": "Type of transmission system",
+      "display_type": "selectbox",
+      "default_value": "Manual",
+      "options": [
+        "Manual",
+        "Automatic",
+        "Semi-Auto"
+      ],
+      "required": true
+    }
+  },
+  "output": {
+    "predicted_price": {
+      "name": "Predicted Price",
+      "type": "number",
+      "unit": "$"
+    },
+    "predictions": {
+      "name": "Prediction Array",
+      "type": "array",
+      "unit": "$"
+    },
+    "count": {
+      "name": "Number of Predictions",
+      "type": "number"
+    }
+  }
 }

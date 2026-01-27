@@ -11,12 +11,15 @@ import shutil
 import boto3
 from datetime import datetime
 import pandas as pd
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from math import sqrt
+import numpy as np
 
 # TODO: Add your model-specific imports here
-# Example: from sklearn.linear_model import LinearRegression
-# Example: from statsmodels.tsa.arima.model import ARIMA
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
 
 
 def upload_evaluation_to_s3(evaluation_data: dict, eval_s3_path: str) -> str:
@@ -67,7 +70,8 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     # TODO: Add your model hyperparameters here
-    # Example: parser.add_argument("--learning-rate", type=float, default=0.01)
+    parser.add_argument("--normalize", type=bool, default=True, help="Whether to normalize features")
+    parser.add_argument("--fit-intercept", type=bool, default=True, help="Whether to fit intercept in linear regression")
 
     # Data split ratios
     parser.add_argument("--train-split", type=float, default=0.7)
@@ -107,7 +111,21 @@ def load_and_preprocess_data(input_path, train_split, validation_split, test_spl
     df = pd.read_csv(data_file)
 
     # TODO: Add your data preprocessing logic here
-    # Example: Parse dates, handle missing values, feature engineering
+    print(f"  Original columns: {list(df.columns)}")
+    
+    # Handle missing values
+    print("  Handling missing values...")
+    df = df.dropna()  # Remove rows with missing values for simplicity
+    
+    # Convert year to age for better regression performance
+    current_year = 2024
+    if 'year' in df.columns:
+        df['age'] = current_year - df['year']
+        print("  Created 'age' feature from 'year'")
+    
+    # Ensure price column exists (this should be our target)
+    if 'price' not in df.columns:
+        raise ValueError("Dataset must contain a 'price' column as the target variable")
 
     print(f"  Loaded {len(df)} rows")
 
@@ -169,31 +187,67 @@ def train_model(train_data, val_data, args):
     print("=" * 60)
 
     # TODO: Implement your model training logic here
-    # Example:
-    # X_train = train_data.drop('target', axis=1)
-    # y_train = train_data['target']
-    # model = YourModel()
-    # model.fit(X_train, y_train)
-
-    model = None  # TODO: Replace with your trained model
+    # Separate features and target
+    target_col = 'price'
+    feature_cols = [col for col in train_data.columns if col != target_col]
+    
+    X_train = train_data[feature_cols]
+    y_train = train_data[target_col]
+    X_val = val_data[feature_cols]
+    y_val = val_data[target_col]
+    
+    print(f"  Training with {len(feature_cols)} features: {feature_cols}")
+    print(f"  Target variable: {target_col}")
+    
+    # Create preprocessing pipeline
+    # Identify numeric and categorical columns
+    numeric_features = X_train.select_dtypes(include=[np.number]).columns.tolist()
+    categorical_features = X_train.select_dtypes(include=['object']).columns.tolist()
+    
+    print(f"  Numeric features: {numeric_features}")
+    print(f"  Categorical features: {categorical_features}")
+    
+    # Create column transformer
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', StandardScaler() if args.normalize else 'passthrough', numeric_features),
+            ('cat', OneHotEncoder(drop='first', sparse_output=False), categorical_features)
+        ])
+    
+    # Fit preprocessor and transform data
+    X_train_processed = preprocessor.fit_transform(X_train)
+    X_val_processed = preprocessor.transform(X_val)
+    
+    # Train linear regression model
+    model = LinearRegression(fit_intercept=args.fit_intercept)
+    model.fit(X_train_processed, y_train)
+    
+    # Store preprocessor with model for inference
+    model_with_preprocessor = {
+        'model': model,
+        'preprocessor': preprocessor,
+        'feature_cols': feature_cols,
+        'target_col': target_col
+    }
 
     print("  Model trained successfully")
 
     # Validate on validation set
     print(f"\nValidating on {len(val_data)} samples...")
     # TODO: Calculate validation metrics
-    val_rmse = 0.0  # TODO: Replace with actual validation RMSE
+    val_predictions = model.predict(X_val_processed)
+    val_rmse = sqrt(mean_squared_error(y_val, val_predictions))
 
     print(f"  Validation RMSE: {val_rmse:.2f}")
 
-    return model, val_rmse
+    return model_with_preprocessor, val_rmse
 
 
 # =============================================================================
 # STEP 3: MODEL EVALUATION
 # =============================================================================
 
-def evaluate_model(model, test_data):
+def evaluate_model(model_obj, test_data):
     """Evaluate model on test set"""
     print("\n" + "=" * 60)
     print("STEP 3: MODEL EVALUATION")
@@ -202,21 +256,31 @@ def evaluate_model(model, test_data):
     print(f"\nEvaluating on {len(test_data)} test samples...")
 
     # TODO: Implement your evaluation logic here
-    # Example:
-    # X_test = test_data.drop('target', axis=1)
-    # y_test = test_data['target']
-    # predictions = model.predict(X_test)
-
-    predictions = []  # TODO: Replace with actual predictions
-    actuals = []      # TODO: Replace with actual values
-    errors = []       # TODO: Replace with actual errors
+    model = model_obj['model']
+    preprocessor = model_obj['preprocessor']
+    feature_cols = model_obj['feature_cols']
+    target_col = model_obj['target_col']
+    
+    X_test = test_data[feature_cols]
+    y_test = test_data[target_col]
+    
+    # Preprocess test data
+    X_test_processed = preprocessor.transform(X_test)
+    
+    # Generate predictions
+    predictions = model.predict(X_test_processed)
+    actuals = y_test.values
+    errors = predictions - actuals
 
     # Calculate metrics
-    # TODO: Replace with actual metric calculations
-    rmse = 0.0
-    mae = 0.0
-    mape = 0.0
-    r2 = 0.0
+    rmse = sqrt(mean_squared_error(actuals, predictions))
+    mae = mean_absolute_error(actuals, predictions)
+    
+    # Calculate MAPE (Mean Absolute Percentage Error)
+    mape = np.mean(np.abs((actuals - predictions) / actuals)) * 100
+    
+    # Calculate R-squared
+    r2 = r2_score(actuals, predictions)
 
     print(f"\nTest Set Metrics:")
     print(f"  RMSE: {rmse:.2f}")
@@ -226,14 +290,14 @@ def evaluate_model(model, test_data):
 
     return {
         "metrics": {
-            "rmse": rmse,
-            "mae": mae,
-            "mape": mape,
-            "r2": r2
+            "rmse": float(rmse),
+            "mae": float(mae),
+            "mape": float(mape),
+            "r2": float(r2)
         },
-        "predictions": predictions,
-        "actuals": actuals,
-        "errors": errors
+        "predictions": predictions.tolist(),
+        "actuals": actuals.tolist(),
+        "errors": errors.tolist()
     }
 
 
@@ -274,7 +338,7 @@ def save_outputs(model, args, data_quality_report, evaluation_results):
 
     # Save metadata
     metadata = {
-        "model_type": "TODO",  # TODO: Replace with your model type
+        "model_type": "linear_regression",
         "data_quality": data_quality_report,
         "test_metrics": evaluation_results["metrics"]
     }
