@@ -1,0 +1,25 @@
+{
+  "name": "TODO: Model Display Name",
+  "info": "TODO: Description of what this model does",
+  "model_type": "TODO: regression | classification | time_series | forecasting",
+  "parameters": {
+    "TODO_PARAM_KEY": {
+      "name": "TODO: Parameter Display Name",
+      "tooltip": "TODO: Help text explaining this parameter",
+      "display_type": "TODO: number | slider | text | array | selectbox | date | boolean",
+      "default_value": "TODO: default value",
+      "required": true
+    }
+  },
+  "output": {
+    "predictions": {
+      "name": "Predictions",
+      "type": "array",
+      "unit": ""
+    },
+    "count": {
+      "name": "Count",
+      "type": "number"
+    }
+  }
+}
