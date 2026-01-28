@@ -101,18 +101,30 @@ def load_burn_data(input_path):
     print("STEP 1: LOADING BURN DATA")
     print("=" * 60)
 
-    # Find the data file in the input path
+    # Find the data file in the input path (prefer Excel, fallback to CSV)
     data_file = None
     for filename in os.listdir(input_path):
-        if filename.endswith('.csv'):
+        if filename.endswith('.xlsx') or filename.endswith('.xls'):
             data_file = os.path.join(input_path, filename)
             break
 
+    # Fallback to CSV if no Excel file found
     if data_file is None:
-        raise ValueError(f"No CSV file found in {input_path}")
+        for filename in os.listdir(input_path):
+            if filename.endswith('.csv'):
+                data_file = os.path.join(input_path, filename)
+                break
+
+    if data_file is None:
+        raise ValueError(f"No Excel (.xlsx/.xls) or CSV file found in {input_path}")
 
     print(f"  Loading data from: {data_file}")
-    burn_df = pd.read_csv(data_file)
+
+    # Load based on file type
+    if data_file.endswith('.csv'):
+        burn_df = pd.read_csv(data_file)
+    else:
+        burn_df = pd.read_excel(data_file)
 
     # Standardize column names
     if burn_df.shape[1] == 2:
