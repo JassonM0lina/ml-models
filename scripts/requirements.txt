@@ -13,5 +13,14 @@
 # Reference: https://github.com/aws/sagemaker-scikit-learn-container
 # =============================================================================
 #
-# Only add ADDITIONAL packages below with pinned versions.
-# Example: xgboost==1.7.6, prophet==1.1.1, statsmodels==0.14.0
+# Additional packages for Saudi Oil Burn Forecaster
+# =============================================================================
+
+# Machine Learning - XGBoost ensemble model
+xgboost>=2.0.0
+
+# API requests for Open-Meteo weather data
+requests>=2.31.0
+
+# Date handling utilities
+python-dateutil>=2.8.0
