@@ -1,25 +1,106 @@
 {
-  "name": "TODO: Model Display Name",
-  "info": "TODO: Description of what this model does",
-  "model_type": "TODO: regression | classification | time_series | forecasting",
+  "name": "Saudi Oil Burn Forecaster",
+  "info": "Forecasts monthly Saudi Arabia crude oil direct burn for power generation using weather data, machine learning ensemble models, and temperature-based override rules. Integrates real-time weather from 7 major Saudi cities with historical burn patterns to predict oil consumption 1-6 months ahead.",
+  "model_type": "time_series_forecasting",
   "parameters": {
-    "TODO_PARAM_KEY": {
-      "name": "TODO: Parameter Display Name",
-      "tooltip": "TODO: Help text explaining this parameter",
-      "display_type": "TODO: number | slider | text | array | selectbox | date | boolean",
-      "default_value": "TODO: default value",
+    "forecast_months": {
+      "name": "Forecast Horizon",
+      "tooltip": "Number of months ahead to forecast. Model accuracy decreases with longer horizons as weather forecasts become less reliable.",
+      "display_type": "slider",
+      "default_value": 3,
+      "min_value": 1,
+      "max_value": 6,
+      "step_value": 1,
+      "unit": "months",
       "required": true
+    },
+    "use_weather_forecast": {
+      "name": "Use Weather Predictions",
+      "tooltip": "Use API weather forecasts for future months. If disabled, uses historical weather averages which may be less accurate but more stable.",
+      "display_type": "boolean",
+      "default_value": true,
+      "required": false
+    },
+    "confidence_level": {
+      "name": "Confidence Interval",
+      "tooltip": "Statistical confidence level for prediction bounds. Higher levels give wider but more reliable intervals.",
+      "display_type": "selectbox",
+      "options": [
+        90,
+        95,
+        99
+      ],
+      "default_value": 95,
+      "unit": "percent",
+      "required": false
+    },
+    "apply_extreme_heat_rules": {
+      "name": "Enable Temperature Overrides",
+      "tooltip": "Apply rule-based adjustments when extreme heat conditions (>118\u00b0F with high extreme day counts) are detected. Prevents underestimation during heat waves.",
+      "display_type": "boolean",
+      "default_value": true,
+      "required": false
+    },
+    "cities_weight_override": {
+      "name": "City Weighting Method",
+      "tooltip": "How to weight weather data from the 7 Saudi cities. Population-based uses demographic weighting, equal treats all cities the same.",
+      "display_type": "selectbox",
+      "options": [
+        "population_weighted",
+        "equal_weighted"
+      ],
+      "default_value": "population_weighted",
+      "required": false
+    },
+    "season_focus": {
+      "name": "Seasonal Optimization",
+      "tooltip": "Optimize model performance for specific seasons. Summer uses dedicated summer model with enhanced heat sensitivity.",
+      "display_type": "selectbox",
+      "options": [
+        "all_seasons",
+        "summer_optimized",
+        "winter_optimized"
+      ],
+      "default_value": "summer_optimized",
+      "required": false
     }
   },
   "output": {
-    "predictions": {
-      "name": "Predictions",
+    "monthly_forecasts": {
+      "name": "Monthly Burn Forecasts",
       "type": "array",
-      "unit": ""
+      "unit": "kbd"
     },
-    "count": {
-      "name": "Count",
-      "type": "number"
+    "confidence_lower": {
+      "name": "Lower Confidence Bounds",
+      "type": "array",
+      "unit": "kbd"
+    },
+    "confidence_upper": {
+      "name": "Upper Confidence Bounds",
+      "type": "array",
+      "unit": "kbd"
+    },
+    "forecast_months": {
+      "name": "Forecast Period Labels",
+      "type": "array",
+      "unit": "month_year"
+    },
+    "weather_drivers": {
+      "name": "Key Weather Metrics",
+      "type": "object"
+    },
+    "model_adjustments": {
+      "name": "Applied Rule Overrides",
+      "type": "array"
+    },
+    "historical_comparison": {
+      "name": "vs Historical Averages",
+      "type": "object"
+    },
+    "model_confidence": {
+      "name": "Prediction Reliability",
+      "type": "object"
     }
   }
 }
