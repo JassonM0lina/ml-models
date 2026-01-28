@@ -124,7 +124,7 @@ def load_burn_data(input_path):
     if data_file.endswith('.csv'):
         burn_df = pd.read_csv(data_file)
     else:
-        burn_df = pd.read_excel(data_file)
+        burn_df = pd.read_excel(data_file, engine='openpyxl')
 
     # Standardize column names
     if burn_df.shape[1] == 2:
