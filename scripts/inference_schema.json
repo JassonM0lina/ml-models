@@ -1,25 +1,60 @@
 {
-  "name": "TODO: Model Display Name",
-  "info": "TODO: Description of what this model does",
-  "model_type": "TODO: regression | classification | time_series | forecasting",
+  "name": "Austin Oil Price Forecasting Model",
+  "info": "ARIMA-based time series forecasting model for oil price predictions. Generates forecasts for WTI crude oil prices with confidence intervals and market insights.",
+  "model_type": "time_series",
   "parameters": {
-    "TODO_PARAM_KEY": {
-      "name": "TODO: Parameter Display Name",
-      "tooltip": "TODO: Help text explaining this parameter",
-      "display_type": "TODO: number | slider | text | array | selectbox | date | boolean",
-      "default_value": "TODO: default value",
-      "required": true
+    "forecast_days": {
+      "name": "Forecast Period (Days)",
+      "tooltip": "Number of days to forecast oil prices into the future. Shorter periods are generally more accurate.",
+      "display_type": "slider",
+      "default_value": 30,
+      "min_value": 1,
+      "max_value": 90,
+      "step_value": 1,
+      "unit": "days",
+      "required": false
+    },
+    "start_date": {
+      "name": "Forecast Start Date",
+      "tooltip": "The date from which to begin the forecast. Format: YYYY-MM-DD",
+      "display_type": "date",
+      "default_value": "2024-02-01",
+      "required": false
+    },
+    "confidence_level": {
+      "name": "Confidence Level",
+      "tooltip": "Statistical confidence level for the forecast intervals. Higher values give wider prediction bands.",
+      "display_type": "selectbox",
+      "default_value": 0.95,
+      "options": [
+        0.8,
+        0.9,
+        0.95,
+        0.99
+      ],
+      "required": false
     }
   },
   "output": {
-    "predictions": {
-      "name": "Predictions",
-      "type": "array",
-      "unit": ""
+    "forecast": {
+      "name": "Price Forecast",
+      "type": "object",
+      "unit": "contains dates, prices, and confidence intervals"
     },
-    "count": {
-      "name": "Count",
-      "type": "number"
+    "summary": {
+      "name": "Forecast Summary",
+      "type": "object",
+      "unit": "statistical summary of the forecast period"
+    },
+    "market_insights": {
+      "name": "Market Insights",
+      "type": "object",
+      "unit": "qualitative analysis and outlook"
+    },
+    "model_info": {
+      "name": "Model Information",
+      "type": "object",
+      "unit": "metadata about the model and forecast"
     }
   }
 }
