@@ -1,0 +1,11 @@
+{
+  "parameters": {
+    "TODO_PARAM_KEY": {
+      "name": "TODO: Parameter Display Name",
+      "tooltip": "TODO: Help text explaining this parameter",
+      "display_type": "TODO: number | slider | text | array | selectbox | date | boolean",
+      "default_value": "TODO: default value",
+      "required": true
+    }
+  }
+}
