@@ -10,13 +10,13 @@ import json
 import shutil
 import boto3
 from datetime import datetime
+import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_squared_error
 from math import sqrt
 
 # Model-specific imports
 import xgboost as xgb
-import numpy as np
 import requests
 from datetime import datetime, timedelta
 from math import sqrt
