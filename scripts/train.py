@@ -12,7 +12,7 @@ import boto3
 from datetime import datetime
 import numpy as np
 import pandas as pd
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
 from math import sqrt
 
 # Model-specific imports
