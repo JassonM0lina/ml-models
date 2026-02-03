@@ -1,11 +1,57 @@
 {
   "parameters": {
-    "TODO_PARAM_KEY": {
-      "name": "TODO: Parameter Display Name",
-      "tooltip": "TODO: Help text explaining this parameter",
-      "display_type": "TODO: number | slider | text | array | selectbox | date | boolean",
-      "default_value": "TODO: default value",
-      "required": true
+    "forecast_months": {
+      "name": "Forecast Months",
+      "tooltip": "Number of months to forecast crude oil burn (1-6 months ahead)",
+      "created_at": "2026-01-07T20:41:52.430649+00:00",
+      "display_type": "slider",
+      "default_value": 3,
+      "required": true,
+      "min_value": 1,
+      "max_value": 6,
+      "step_value": 1
+    },
+    "target_year": {
+      "name": "Target Year",
+      "tooltip": "Year for the forecast (defaults to current year if not specified)",
+      "created_at": "2026-01-07T20:41:52.430649+00:00",
+      "display_type": "number",
+      "default_value": 2025,
+      "required": false,
+      "min_value": 2024,
+      "max_value": 2030
+    },
+    "target_month": {
+      "name": "Starting Month",
+      "tooltip": "Starting month for forecast (1=January, 2=February, ..., 12=December)",
+      "created_at": "2026-01-07T20:41:52.430649+00:00",
+      "display_type": "slider",
+      "default_value": 1,
+      "required": true,
+      "min_value": 1,
+      "max_value": 12,
+      "step_value": 1
+    },
+    "use_temperature_override": {
+      "name": "Enable Temperature Override",
+      "tooltip": "Apply rule-based adjustments for extreme heat conditions (>48\u00b0C) that may increase crude burn beyond model predictions",
+      "created_at": "2026-01-07T20:41:52.430649+00:00",
+      "display_type": "boolean",
+      "default_value": true,
+      "required": false
+    },
+    "confidence_level": {
+      "name": "Confidence Level",
+      "tooltip": "Confidence level for prediction intervals (90%, 95%, or 99%)",
+      "created_at": "2026-01-07T20:41:52.430649+00:00",
+      "display_type": "selectbox",
+      "default_value": 95,
+      "required": false,
+      "options": [
+        90,
+        95,
+        99
+      ]
     }
   }
 }
