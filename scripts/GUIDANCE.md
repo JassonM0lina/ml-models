@@ -357,7 +357,7 @@ Based on your forecasting logic, create an `inference_schema.json`:
 
 ### 5. Prepare Training Data
 
-Move your historical data file (`Saudi Crude Burn History.xlsx`) to the `training_data` folder. The training script will automatically load it from the SageMaker input path.
+The training data has been uploaded as a parquet file to its proper location. This parquet file was created directly from Saudi Crude Burn History.xlsx, so it should have the same content as the excel file.
 
 ## Key Architectural Changes
 
