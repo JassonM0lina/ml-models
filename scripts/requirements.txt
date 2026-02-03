@@ -16,7 +16,9 @@
 # Additional packages for Saudi Crude Burn Forecaster
 # (pandas, numpy, scikit-learn already included in base container)
 
-xgboost>=2.0.0
+# XGBoost 1.7.6 is compatible with numpy 1.24.1 in the container
+# XGBoost 2.0+ requires numpy 1.25+ which conflicts with the container
+xgboost==1.7.6
 matplotlib>=3.7.0
 seaborn>=0.12.0
 requests>=2.31.0
