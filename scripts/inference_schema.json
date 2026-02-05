@@ -1,11 +1,65 @@
 {
   "parameters": {
-    "TODO_PARAM_KEY": {
-      "name": "TODO: Parameter Display Name",
-      "tooltip": "TODO: Help text explaining this parameter",
-      "display_type": "TODO: number | slider | text | array | selectbox | date | boolean",
-      "default_value": "TODO: default value",
+    "prediction_days": {
+      "name": "Forecast Days",
+      "tooltip": "Number of days ahead to predict gas prices (1-30 days)",
+      "display_type": "slider",
+      "default_value": 7,
+      "required": true,
+      "unit": "days",
+      "min_value": 1,
+      "max_value": 30,
+      "step_value": 1
+    },
+    "crude_oil_price": {
+      "name": "Crude Oil Price",
+      "tooltip": "Current crude oil price per barrel (WTI), major driver of gas prices",
+      "display_type": "number",
+      "default_value": 75.0,
+      "required": true,
+      "unit": "$/barrel",
+      "min_value": 40.0,
+      "max_value": 150.0
+    },
+    "demand_level": {
+      "name": "Demand Level",
+      "tooltip": "Current gasoline demand level in the Orlando market",
+      "display_type": "selectbox",
+      "default_value": "normal",
+      "required": true,
+      "options": [
+        "low",
+        "normal",
+        "high",
+        "very_high"
+      ]
+    },
+    "supply_disruption": {
+      "name": "Supply Disruption",
+      "tooltip": "Is there currently a supply disruption affecting the market (refinery issues, pipeline problems, etc.)?",
+      "display_type": "boolean",
+      "default_value": false,
       "required": true
+    },
+    "current_temperature": {
+      "name": "Current Temperature",
+      "tooltip": "Current temperature in Orlando (affects driving patterns and demand)",
+      "display_type": "number",
+      "default_value": 75.0,
+      "required": false,
+      "unit": "\u00b0F",
+      "min_value": 40.0,
+      "max_value": 100.0
+    },
+    "current_gas_price": {
+      "name": "Current Gas Price",
+      "tooltip": "Current average gas price per gallon in Orlando (used as baseline for predictions)",
+      "display_type": "number",
+      "default_value": 3.2,
+      "required": true,
+      "unit": "$/gallon",
+      "min_value": 2.5,
+      "max_value": 5.0
     }
   }
 }
